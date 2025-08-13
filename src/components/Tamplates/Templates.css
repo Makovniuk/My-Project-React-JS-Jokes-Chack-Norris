@@ -1,0 +1,35 @@
+.wraper {
+    display: flex;
+    width: 1440px;
+    height: 900px;
+    flex-direction: row;
+
+}
+
+.main-content {
+    width: 960px;
+    height: 900px;
+    background-color: #fff;
+    padding-left: 140px;
+    padding-top: 140px;
+
+}
+
+.favourite-content {
+    background-color:#F8F8F8;
+    width: 480px;
+    height: 900px;
+    padding-left: 140px;
+    padding-top: 140px;
+
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+  
+.button {
+    margin-top: 30px;
+}
