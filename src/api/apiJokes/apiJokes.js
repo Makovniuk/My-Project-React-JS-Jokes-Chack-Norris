@@ -1,11 +1,11 @@
 import axios from '../service';
 
-const random = {
-    get: () => axios.get('/random')
+const apiJokes = {
+    get: (endpoint, params = {}) => axios.get(`/${endpoint}`, { params })
     .then(({ data }) => data)
     .catch((err) => {
         throw new Error(err);
       }),
 };
 
-export { random };
+export { apiJokes };

@@ -1,7 +1,9 @@
 .jokes-card{
     width: 680px;
     height: 225px;
-    background-color: gray ;
+    background-color: #E8E8E8;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
+    text-align: center;
 }
 

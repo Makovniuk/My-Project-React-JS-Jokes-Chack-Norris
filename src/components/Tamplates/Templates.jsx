@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import './Templates.css';
 import { Input, Radio, Button } from 'antd';
-import { random } from '../../api/random/random';
+import { apiJokes } from '../../api/apiJokes/apiJokes';
 import JokeCard from '../JokeCard/JokeCard';
 
 
 const Templates = () => {
     const [value, setValue] = useState(0);
     const [searchText, setSearchText] = useState('');
-    const [showJokeCard, setShowJokeCard] =useState(false)
+    const [showJokeCard, setShowJokeCard] =useState(false);
+    const [jokesData, setJokesData] = useState({});
     
     const onChangeOptions = e => {
       setValue(e.target.value);
@@ -19,14 +20,18 @@ const Templates = () => {
     };
 
     
-  const handleGetJoke = async () => {
-    try {
-      const result = await random.get()
-      console.log('Joke data:', result);
-    } catch (error) {
-      console.error('Error fetching joke:', error);
-    }
-  };
+    const handleGetJoke = async () => {
+      try {
+        const params = value === 'search' ? { query: searchText } : {};
+        const result = await apiJokes.get(value, params);
+        setShowJokeCard(true);
+        setJokesData(result);
+        console.log(jokesData)
+      } catch (error) {
+        console.error('Error fetching joke:', error);
+      }
+    };
+ 
 
     return (
        <div className="wraper">
@@ -38,14 +43,14 @@ const Templates = () => {
                 onChange={onChangeOptions}
                 value={value}
                 options={[
-                    { value: 1, label: 'Random' },
-                    { value: 2, label: 'From categories' },
+                    { value: 'random', label: 'Random' },
+                    { value: 'categories', label: 'From categories' },
                     {
-                    value: 3,
+                    value: 'search',
                     label: (
                 <>
                 Search
-                {value === 3 && (
+                {value === 'search' && (
                     <Input
                     variant="filled"
                     placeholder="Free text search..."
@@ -58,9 +63,9 @@ const Templates = () => {
         },
       ]}
     />
-        <Button type="primary" className='button' onClick={() => setShowJokeCard(true)}>Get a joke</Button>
+        <Button type="primary" className='button' onClick={() => handleGetJoke()}>Get a joke</Button>
 
-        {showJokeCard && <JokeCard />}
+        {showJokeCard && <JokeCard jokesData ={jokesData} />}
     </div>
             <div className="favourite-content">Favourite content</div>
        </div>

@@ -1,8 +1,10 @@
+import './JokeCard.css';
 
-const JokeCard = () => {
+const JokeCard = ({ jokesData }) => {
+
 return (
 <div className="jokes-card">
-<h1>JOKES</h1>
+<h5>{jokesData.value}</h5>
 </div>
 )
 };
