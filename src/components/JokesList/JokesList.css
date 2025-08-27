@@ -1,0 +1,37 @@
+.cards-container {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+    border-radius: 8px;
+  
+    /* скролл кастомный */
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+  }
+  
+  /* Chrome, Edge, Safari */
+  .cards-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  .cards-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 8px;
+  }
+  .cards-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 8px;
+  }
+  .cards-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  /* эффект теней */
+  .cards-container {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 20px, black calc(100% - 20px), transparent);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-composite: destination-in;
+    mask-image: linear-gradient(to bottom, transparent, black 20px, black calc(100% - 20px), transparent);
+    mask-repeat: no-repeat;
+    mask-composite: intersect;
+  }
+  

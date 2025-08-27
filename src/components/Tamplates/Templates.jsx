@@ -4,6 +4,7 @@ import { Input, Radio, Button } from 'antd';
 import { apiJokes } from '../../api/apiJokes/apiJokes';
 import JokeCard from '../JokeCard/JokeCard';
 import CategoriesList from '../CategoriesList/CategoriesList';
+import JokesList from '../JokesList/JokesList';
 
 const Templates = () => {
   const [value, setValue] = useState('random');
@@ -13,19 +14,24 @@ const Templates = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
 
-  const onChangeOptions = async e => {
-    const newValue = e.target.value;
-    setValue(newValue);
-
-    if (newValue === 'categories') {
-      // грузим список категорий
-      try {
-        const result = await apiJokes.get(value);
-        setCategories(result);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
+  // Загружаем категории один раз, когда value меняется на 'categories'
+  useEffect(() => {
+    if (value === 'categories' && categories.length === 0) {
+      const fetchCategories = async () => {
+        try {
+          const result = await apiJokes.get('categories', {});
+          setCategories(result);
+        } catch (error) {
+          console.error('Error fetching categories:', error);
+        }
+      };
+      fetchCategories();
     }
+  }, [value, categories.length]);
+
+  const onChangeOptions = e => {
+    setValue(e.target.value);
+    setShowJokeCard(false); // сбросить предыдущий анекдот
   };
 
   const onChangeSearch = e => {
@@ -34,16 +40,19 @@ const Templates = () => {
 
   const handleGetJoke = async () => {
     try {
+      let endpoint = value;
       let params = {};
-      if (value === 'search') params = { query: searchText };
-      if (value === 'categories' && selectedCategory) {
-        setValue('category'); // меняем эндпоинт
+
+      if (value === 'search') {
+        params = { query: searchText };
+      } else if (value === 'categories' && selectedCategory) {
+        endpoint = 'random'; // используем корректный эндпоинт
         params = { category: selectedCategory };
       }
 
-      const result = await apiJokes.get(value, params);
-      setShowJokeCard(true);
+      const result = await apiJokes.get(endpoint, params);
       setJokesData(result);
+      setShowJokeCard(true);
     } catch (error) {
       console.error('Error fetching joke:', error);
     }
@@ -66,28 +75,37 @@ const Templates = () => {
           ]}
         />
 
-        {/* Input показываем отдельно */}
         {value === 'search' && (
           <Input
+            className='input-search'
             placeholder="Free text search..."
             onChange={onChangeSearch}
-            style={{ width: 500, marginTop: 10 }}
+            value={searchText}
           />
         )}
 
-        {/* Категории показываем под радио */}
         {value === 'categories' && (
           <CategoriesList
             tagsData={categories}
+            selectedCategory={selectedCategory}
             onSelectCategory={setSelectedCategory}
           />
         )}
 
-        <Button type="primary" className="button" onClick={handleGetJoke}>
+        <Button
+          type="primary"
+          className="button"
+          onClick={handleGetJoke}
+          disabled={value === 'categories' && !selectedCategory} // нельзя получить шутку без выбора категории
+        >
           Get a joke
         </Button>
 
-        {showJokeCard && <JokeCard jokesData={jokesData} />}
+        {showJokeCard && (
+          Array.isArray(jokesData.result) 
+          ? <JokesList jokesData={jokesData.result} />
+          : <JokeCard jokesData={jokesData} />
+        )}
       </div>
 
       <div className="favourite-content">Favourite content</div>
