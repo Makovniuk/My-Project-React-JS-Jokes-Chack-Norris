@@ -13,6 +13,21 @@ const Templates = () => {
   const [jokesData, setJokesData] = useState({});
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [favoriteList, setFavoriteList] = useState([]);
+
+  const toggleFavourite = (joke) => {
+    setFavoriteList (prev => {
+      const exist = prev.some(f => f.id === joke.id);
+      if (exist) {
+        return prev.filter( f => f.id !== joke.id);
+      } else {
+        return [...prev, joke]
+      }
+    }) 
+
+  }
+
+
 
   // Загружаем категории один раз, когда value меняется на 'categories'
   useEffect(() => {
@@ -103,12 +118,31 @@ const Templates = () => {
 
         {showJokeCard && (
           Array.isArray(jokesData.result) 
-          ? <JokesList jokesData={jokesData.result} />
-          : <JokeCard jokesData={jokesData} />
+          ? <JokesList 
+          jokesData={jokesData} 
+          favoriteList={favoriteList}
+          onToggleFavourite={toggleFavourite}
+        />        
+          : <JokeCard
+          jokesData={jokesData}
+          isFavourite={favoriteList.some(f => f.id === jokesData.id)}
+          onToggleFavourite={() => toggleFavourite(jokesData)}
+        />
         )}
       </div>
 
-      <div className="favourite-content">Favourite content</div>
+      <div className="favourite-content">
+      {favoriteList.length > 0
+    ? favoriteList.map(joke => (
+        <JokeCard
+          key={joke.id}
+          jokesData={joke}
+          isFavourite={true}
+          onToggleFavourite={() => toggleFavourite(joke)}
+        />
+      ))
+    : <p>No favourites yet</p>}
+      </div>
     </div>
   );
 };

@@ -1,11 +1,8 @@
 import './JokeCard.css';
-import { Button } from 'antd';
 import { HeartFilled, HeartOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 
-const JokeCard = ({ jokesData }) => {
-
-const [liked, setLiked] = useState(false);
+const JokeCard = ({ jokesData, isFavourite, onToggleFavourite }) => {
 
 const dateFromBackend = new Date(jokesData.updated_at.replace(/(\.\d{3})\d+/, '$1'));
 const now = new Date();
@@ -17,10 +14,10 @@ return (
 <div className="jokes-card">
     <div className="content-card">
     <div
-        onClick={() => setLiked(!liked)}
-        className={`heart-icon ${liked ? "liked" : ""}`}
+        onClick={onToggleFavourite}
+        className={`heart-icon ${isFavourite ? "liked" : ""}`}
       >
-        {liked ? <HeartFilled /> : <HeartOutlined />}
+        {isFavourite ? <HeartFilled /> : <HeartOutlined />}
       </div>
         <h5>{jokesData.value}</h5>
         <p className='update-data'>Last update: {hoursPassed.toFixed()} years ago</p>
