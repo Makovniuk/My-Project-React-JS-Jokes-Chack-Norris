@@ -132,6 +132,7 @@ const Templates = () => {
       </div>
 
       <div className="favourite-content">
+        <h3>My favourite jokes</h3>
       {favoriteList.length > 0
     ? favoriteList.map(joke => (
         <JokeCard
@@ -139,10 +140,11 @@ const Templates = () => {
           jokesData={joke}
           isFavourite={true}
           onToggleFavourite={() => toggleFavourite(joke)}
+          compact
         />
       ))
     : <p>No favourites yet</p>}
-      </div>
+    </div>
     </div>
   );
 };

@@ -63,4 +63,26 @@
       transform: scale(1);
     }
   }
+
+  .jokes-card.compact {
+    transform: scale(0.6); /* сжатие всей карточки */
+    margin: 4px;
+  }
+  
+  .jokes-card.compact h5 {
+    font-size: 16px;
+  }
+  
+  .jokes-card.compact .update-data {
+    font-size: 14px;
+  }
+  
+  .jokes-card.compact .categori {
+    font-size: 16px;
+  }
+  
+  .jokes-card.compact .heart-icon {
+    font-size: 16px;
+  }
+  
   
