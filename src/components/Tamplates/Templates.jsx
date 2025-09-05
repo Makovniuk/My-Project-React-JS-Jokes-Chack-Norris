@@ -146,6 +146,7 @@ const Templates = () => {
     : <p>No favourites yet</p>}
     </div>
     </div>
+    
   );
 };
 

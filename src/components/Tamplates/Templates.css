@@ -1,43 +1,88 @@
-.wraper {
-    display: flex;
-    width: 1440px;
-    height: 900px;
-    flex-direction: row;
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* скрываем горизонтальный скролл */
+}
 
+.wraper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 .main-content {
-    width: 960px;
-    height: 900px;
-    background-color: #fff;
-    padding-left: 140px;
-    padding-top: 100px;
-
+  flex: 2;
+  background-color: #fff;
+  padding: 50px 50px 50px 50px; /* убрал фиксированный 140px */
+  box-sizing: border-box;
 }
 
 .favourite-content {
-    background-color:#F8F8F8;
-    width: 480px;
-    height: 900px;
-    padding-top: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  flex: 1;
+  background-color:#F8F8F8;
+  padding: 50px 20px 20px;
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .radio-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-  
+
 .button {
-    margin-top: 30px;
-    margin-bottom: 30px;
+  margin: 30px 0;
+  max-width: 100px;
+  width: 100%;
 }
 
 .input-search {
-    margin-top: 25px;
-    width: 500px;
-    margin-right: 250px;
+  margin-top: 25px;
+  width: 100%;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: 20px;
+  box-sizing: border-box;
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+  .wraper {
+    flex-direction: column;
+    width: 100%;
+    min-height: auto;
+  }
+
+  .main-content,
+  .favourite-content {
+    flex: none;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .input-search {
+    width: 100%;
+    max-width: none;
+    margin: 16px 0;
+  }
+
+  .button {
+    width: 100%;
+    max-width: none;
+  }
+
+  .radio-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
 }

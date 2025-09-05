@@ -1,36 +1,42 @@
-.jokes-card{
-    width: 680px;
-    height: 225px;
-    background-color: #E8E8E8;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-    border-radius: 20px;
-    text-align: center;
-    margin: 0 auto;
-    margin-bottom: 15px;
+.jokes-card {
+  position: relative;
+  width: 100%;                     /* всегда занимает доступную ширину */
+  max-width: 680px;                /* но не больше 680px */
+  min-height: 200px;
+  background-color: #E8E8E8;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  text-align: center;
+  margin: 0 auto 15px;
+  padding: 20px;                   /* чтобы текст не упирался в края */
+  box-sizing: border-box;
 }
 
-.content-card{
-    position: relative;
-    width: 600px;
-    height: 113px;
-    text-align: center;
-    margin: 0 auto;
-    padding-top: 56px;
+.jokes-card:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2); /* тень сильнее */
+}
+
+.content-card {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+  padding: 40px 12px 20px;         /* сверху под сердечко */
+  box-sizing: border-box;
 }
 
 .heart-icon {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    font-size: 22px;
-    color: gray;
-    cursor: pointer;
-    transform-origin: center;
-  }
+  position: absolute;
+  top: 12px;
+  right: 25px;
+  font-size: 22px;
+  color: gray;
+  cursor: pointer;
+}
+
   .update-data {
     position: absolute;
-    bottom: -50px;
-    left: 12px;
+    bottom: 0px;
+    left: 25px;
     font-size: 14px;
     color: gray;
     cursor: pointer;
@@ -39,8 +45,8 @@
 
   .categori {
     position: absolute;
-    bottom: -50px;
-    right: 12px;
+    bottom: 0px;
+    right: 25px;
     font-size: 15px;
     color: gray;
     cursor: pointer;
@@ -65,8 +71,8 @@
   }
 
   .jokes-card.compact {
-    transform: scale(0.6); /* сжатие всей карточки */
-    margin: 4px;
+    transform: scale(0.8); /* сжатие всей карточки */
+    margin: 10px;
   }
   
   .jokes-card.compact h5 {
@@ -74,10 +80,12 @@
   }
   
   .jokes-card.compact .update-data {
+    bottom: -2px;
     font-size: 14px;
   }
   
   .jokes-card.compact .categori {
+    bottom: 0px;
     font-size: 16px;
   }
   
