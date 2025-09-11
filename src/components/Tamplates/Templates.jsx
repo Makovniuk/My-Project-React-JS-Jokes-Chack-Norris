@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { GithubOutlined } from "@ant-design/icons";
 import './Templates.css';
 import { Input, Radio, Button } from 'antd';
 import { apiJokes } from '../../api/apiJokes/apiJokes';
@@ -13,7 +14,10 @@ const Templates = () => {
   const [jokesData, setJokesData] = useState({});
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [favoriteList, setFavoriteList] = useState([]);
+  const [favoriteList, setFavoriteList] = useState(() => {
+    const saved = localStorage.getItem("favoriteJokes");
+    return saved ? JSON.parse(saved) : [];
+  });
 
   const toggleFavourite = (joke) => {
     setFavoriteList (prev => {
@@ -24,10 +28,16 @@ const Templates = () => {
         return [...prev, joke]
       }
     }) 
-
   }
 
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("favoriteJokes")) || [];
+    setFavoriteList(saved);
+  }, []);
 
+  useEffect(() => {
+    localStorage.setItem("favoriteJokes", JSON.stringify(favoriteList));
+  }, [favoriteList]);
 
   // Загружаем категории один раз, когда value меняется на 'categories'
   useEffect(() => {
@@ -74,6 +84,7 @@ const Templates = () => {
   };
 
   return (
+    <>
     <div className="wraper">
       <div className="main-content">
         <h2>Hey!</h2>
@@ -146,7 +157,18 @@ const Templates = () => {
     : <p>No favourites yet</p>}
     </div>
     </div>
-    
+    <footer className="footer">
+      <a
+        href="https://github.com/Makovniuk"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="github-link"
+      >
+        <GithubOutlined style={{ fontSize: "24px" }} /> 
+      </a>
+      <span> by Makovniuk</span>
+    </footer>
+    </>
   );
 };
 

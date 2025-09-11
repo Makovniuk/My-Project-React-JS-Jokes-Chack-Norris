@@ -7,7 +7,7 @@
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   text-align: center;
-  margin: 0 auto 15px;
+  margin: 0 auto 25px;
   padding: 20px;                   /* чтобы текст не упирался в края */
   box-sizing: border-box;
 }
@@ -92,5 +92,3 @@
   .jokes-card.compact .heart-icon {
     font-size: 16px;
   }
-  
-  
