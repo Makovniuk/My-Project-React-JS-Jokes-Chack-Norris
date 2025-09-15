@@ -1,9 +1,7 @@
-import Templates from '../src/components/Tamplates/Templates'
+import Templates from "../src/components/Tamplates/Templates";
 
 function App() {
-  return (
-  <Templates />
-  )
+  return <Templates />;
 }
 
-export default App
+export default App;

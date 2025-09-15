@@ -1,39 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { GithubOutlined } from "@ant-design/icons";
-import './Templates.css';
-import { Input, Radio, Button } from 'antd';
-import { apiJokes } from '../../api/apiJokes/apiJokes';
-import JokeCard from '../JokeCard/JokeCard';
-import CategoriesList from '../CategoriesList/CategoriesList';
-import JokesList from '../JokesList/JokesList';
+import React, { useState, useEffect } from "react";
+import "./Templates.css";
+import { Input, Radio, Button } from "antd";
+import { apiJokes } from "../../api/apiJokes/apiJokes";
+import JokeCard from "../JokeCard/JokeCard";
+import CategoriesList from "../CategoriesList/CategoriesList";
+import JokesList from "../JokesList/JokesList";
+import FavouriteJokesList from "../FavouriteJokesList/FavouriteJokesList";
+import Footer from "../Footer/Footer";
 
 const Templates = () => {
-  const [value, setValue] = useState('random');
-  const [searchText, setSearchText] = useState('');
+  const [value, setValue] = useState("random");
+  const [searchText, setSearchText] = useState("");
   const [showJokeCard, setShowJokeCard] = useState(false);
   const [jokesData, setJokesData] = useState({});
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [favoriteList, setFavoriteList] = useState(() => {
     const saved = localStorage.getItem("favoriteJokes");
     return saved ? JSON.parse(saved) : [];
   });
 
   const toggleFavourite = (joke) => {
-    setFavoriteList (prev => {
-      const exist = prev.some(f => f.id === joke.id);
+    setFavoriteList((prev) => {
+      const exist = prev.some((f) => f.id === joke.id);
       if (exist) {
-        return prev.filter( f => f.id !== joke.id);
+        return prev.filter((f) => f.id !== joke.id);
       } else {
-        return [...prev, joke]
+        return [...prev, joke];
       }
-    }) 
-  }
-
-  useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("favoriteJokes")) || [];
-    setFavoriteList(saved);
-  }, []);
+    });
+  };
 
   useEffect(() => {
     localStorage.setItem("favoriteJokes", JSON.stringify(favoriteList));
@@ -41,25 +37,25 @@ const Templates = () => {
 
   // Загружаем категории один раз, когда value меняется на 'categories'
   useEffect(() => {
-    if (value === 'categories' && categories.length === 0) {
+    if (value === "categories" && categories.length === 0) {
       const fetchCategories = async () => {
         try {
-          const result = await apiJokes.get('categories', {});
+          const result = await apiJokes.get("categories", {});
           setCategories(result);
         } catch (error) {
-          console.error('Error fetching categories:', error);
+          console.error("Error fetching categories:", error);
         }
       };
       fetchCategories();
     }
   }, [value, categories.length]);
 
-  const onChangeOptions = e => {
+  const onChangeOptions = (e) => {
     setValue(e.target.value);
     setShowJokeCard(false); // сбросить предыдущий анекдот
   };
 
-  const onChangeSearch = e => {
+  const onChangeSearch = (e) => {
     setSearchText(e.target.value);
   };
 
@@ -68,10 +64,10 @@ const Templates = () => {
       let endpoint = value;
       let params = {};
 
-      if (value === 'search') {
+      if (value === "search") {
         params = { query: searchText };
-      } else if (value === 'categories' && selectedCategory) {
-        endpoint = 'random'; // используем корректный эндпоинт
+      } else if (value === "categories" && selectedCategory) {
+        endpoint = "random"; // используем корректный эндпоинт
         params = { category: selectedCategory };
       }
 
@@ -79,95 +75,75 @@ const Templates = () => {
       setJokesData(result);
       setShowJokeCard(true);
     } catch (error) {
-      console.error('Error fetching joke:', error);
+      console.error("Error fetching joke:", error);
     }
   };
 
   return (
     <>
-    <div className="wraper">
-      <div className="main-content">
-        <h2>Hey!</h2>
-        <h3>Let’s try to find a joke for you:</h3>
+      <div className="wraper">
+        <div className="main-content">
+          <h2>Hey, Chuck Norris joke lover!</h2>
+          <h3>Let’s try to find a joke for you:</h3>
 
-        <Radio.Group
-          className="radio-group"
-          onChange={onChangeOptions}
-          value={value}
-          options={[
-            { value: 'random', label: 'Random' },
-            { value: 'categories', label: 'From categories' },
-            { value: 'search', label: 'Search' },
-          ]}
-        />
-
-        {value === 'search' && (
-          <Input
-            className='input-search'
-            placeholder="Free text search..."
-            onChange={onChangeSearch}
-            value={searchText}
+          <Radio.Group
+            className="radio-group"
+            onChange={onChangeOptions}
+            value={value}
+            options={[
+              { value: "random", label: "Random" },
+              { value: "categories", label: "From categories" },
+              { value: "search", label: "Search" },
+            ]}
           />
-        )}
 
-        {value === 'categories' && (
-          <CategoriesList
-            tagsData={categories}
-            selectedCategory={selectedCategory}
-            onSelectCategory={setSelectedCategory}
-          />
-        )}
+          {value === "search" && (
+            <Input
+              className="input-search"
+              placeholder="Free text search..."
+              onChange={onChangeSearch}
+              value={searchText}
+            />
+          )}
 
-        <Button
-          type="primary"
-          className="button"
-          onClick={handleGetJoke}
-          disabled={value === 'categories' && !selectedCategory} // нельзя получить шутку без выбора категории
-        >
-          Get a joke
-        </Button>
+          {value === "categories" && (
+            <CategoriesList
+              tagsData={categories}
+              selectedCategory={selectedCategory}
+              onSelectCategory={setSelectedCategory}
+            />
+          )}
 
-        {showJokeCard && (
-          Array.isArray(jokesData.result) 
-          ? <JokesList 
-          jokesData={jokesData} 
+          <Button
+            type="primary"
+            className="button"
+            onClick={handleGetJoke}
+            disabled={value === "categories" && !selectedCategory}
+          >
+            Get a joke
+          </Button>
+
+          {showJokeCard &&
+            (Array.isArray(jokesData.result) ? (
+              <JokesList
+                jokesData={jokesData}
+                favoriteList={favoriteList}
+                onToggleFavourite={toggleFavourite}
+              />
+            ) : (
+              <JokeCard
+                jokesData={jokesData}
+                isFavourite={favoriteList.some((f) => f.id === jokesData.id)}
+                onToggleFavourite={() => toggleFavourite(jokesData)}
+              />
+            ))}
+        </div>
+        <FavouriteJokesList
           favoriteList={favoriteList}
-          onToggleFavourite={toggleFavourite}
-        />        
-          : <JokeCard
-          jokesData={jokesData}
-          isFavourite={favoriteList.some(f => f.id === jokesData.id)}
-          onToggleFavourite={() => toggleFavourite(jokesData)}
+          toggleFavourite={toggleFavourite}
         />
-        )}
       </div>
-
-      <div className="favourite-content">
-        <h3>My favourite jokes</h3>
-      {favoriteList.length > 0
-    ? favoriteList.map(joke => (
-        <JokeCard
-          key={joke.id}
-          jokesData={joke}
-          isFavourite={true}
-          onToggleFavourite={() => toggleFavourite(joke)}
-          compact
-        />
-      ))
-    : <p>No favourites yet</p>}
-    </div>
-    </div>
-    <footer className="footer">
-      <a
-        href="https://github.com/Makovniuk"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="github-link"
-      >
-        <GithubOutlined style={{ fontSize: "24px" }} /> 
-      </a>
-      <span> by Makovniuk</span>
-    </footer>
+      <Footer />
     </>
   );
 };

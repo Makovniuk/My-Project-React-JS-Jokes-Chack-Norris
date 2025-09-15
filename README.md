@@ -1,8 +1,38 @@
-# React + Vite
+# Vite React Project – Chuck Norris Jokes
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📦 Описание
 
-Currently, two official plugins are available:
+Небольшое React-приложение на Vite для любителей шуток про Чака Норриса.
+Шутки подгружаются из Chuck Norris API, можно искать, фильтровать по категориям и сохранять понравившиеся.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+✨ Возможности:
+Получить случайную шутку.
+Получить случайную шутку по категории.
+Поиск шуток по ключевому слову.
+Добавление шуток в избранное (хранятся в localStorage).
+Просмотр и управление избранными шутками.
+
+## 🛠 Технологии
+
+React
+Vite
+Chuck Norris API
+Render.com
+LocalStorage для сохранения избранного
+
+## 🚀 Установка и запуск
+
+### 1. Клонирование репозитория
+
+git clone https://github.com/Makovniuk/My-Project-React-JS-Jokes-Chack-Norris
+
+### 2. Запуск через Docker
+
+docker build -t my-vite-app .
+docker run -p 5173:5173 my-vite-app
+После этого открой http://localhost:5173
+
+## 📌 Контакты
+
+Автор: Маковнюк Евгений
+Email: mmmjekammm@gmail.com
