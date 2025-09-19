@@ -1,26 +1,26 @@
 .jokes-card {
   position: relative;
-  width: 100%;                     /* всегда занимает доступную ширину */
-  max-width: 680px;                /* но не больше 680px */
+  width: 100%;                     
+  max-width: 680px;            
   min-height: 200px;
   background-color: #E8E8E8;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   text-align: center;
   margin: 0 auto 25px;
-  padding: 20px;                   /* чтобы текст не упирался в края */
+  padding: 20px;                  
   box-sizing: border-box;
 }
 
 .jokes-card:hover {
-  box-shadow: 0 6px 16px rgba(0,0,0,0.2); /* тень сильнее */
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2); 
 }
 
 .content-card {
   width: 100%;
   text-align: center;
   margin: 0 auto;
-  padding: 40px 12px 20px;         /* сверху под сердечко */
+  padding: 40px 12px 20px;         
   box-sizing: border-box;
 }
 
@@ -71,7 +71,7 @@
   }
 
   .jokes-card.compact {
-    transform: scale(0.8); /* сжатие всей карточки */
+    transform: scale(0.8); 
     margin: 10px;
   }
   

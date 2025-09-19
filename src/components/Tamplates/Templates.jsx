@@ -35,7 +35,6 @@ const Templates = () => {
     localStorage.setItem("favoriteJokes", JSON.stringify(favoriteList));
   }, [favoriteList]);
 
-  // Загружаем категории один раз, когда value меняется на 'categories'
   useEffect(() => {
     if (value === "categories" && categories.length === 0) {
       const fetchCategories = async () => {
@@ -52,7 +51,7 @@ const Templates = () => {
 
   const onChangeOptions = (e) => {
     setValue(e.target.value);
-    setShowJokeCard(false); // сбросить предыдущий анекдот
+    setShowJokeCard(false);
   };
 
   const onChangeSearch = (e) => {
@@ -67,7 +66,7 @@ const Templates = () => {
       if (value === "search") {
         params = { query: searchText };
       } else if (value === "categories" && selectedCategory) {
-        endpoint = "random"; // используем корректный эндпоинт
+        endpoint = "random";
         params = { category: selectedCategory };
       }
 
